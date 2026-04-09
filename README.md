@@ -14,30 +14,33 @@ This project aims to provide an extensive engineering track tailored for develop
 The project follows a microservices architecture, allowing for independent deployments and scalability. The services communicate through REST APIs and are managed using Docker containers.
 
 ┌─────────────────────────────────────────────────────────────┐
-│                    CLIENT LAYER (React)                      │
-│              Components → Hooks → Context API                │
+│                    CLIENT LAYER (React)                     │
+│              Components → Hooks → Context API               │
 └──────────────────────────┬──────────────────────────────────┘
                            │
+                           
                     ┌──────▼───────┐
                     │   HTTP/REST  │
                     │   (JSON)     │
                     └──────┬───────┘
                            │
+                           
 ┌──────────────────────────▼──────────────────────────────────┐
-│                  SERVER LAYER (Express)                      │
+│                  SERVER LAYER (Express)                     │
 │  Routes → Controllers → Services → Models → Database        │
-├─ JWT Authentication Middleware ────────────────────────────┤
-├─ Request Validation Middleware ──────────────────���─────────┤
+├─ JWT Authentication Middleware ──────────────────────────── ┤
+├─ Request Validation Middleware ──────────────────�────────┤
 ├─ Error Handling Middleware ────────────────────────────────┤
 └──────────────────────────┬──────────────────────────────────┘
                            │
+                           
                     ┌──────▼───────┐
                     │   SQL Query  │
                     │  Connection  │
                     └──────┬───────┘
                            │
 ┌──────────────────────────▼──────────────────────────────────┐
-│              DATABASE LAYER (PostgreSQL)                     │
+│              DATABASE LAYER (PostgreSQL)                    │
 │          Tables → Indexes → Constraints → ACID              │
 └──────────────────────────────────────────────────────────────┘
 
@@ -95,10 +98,8 @@ Make sure the services are running before running integration tests.
    Provide a detailed description of the changes made.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the https://github.com/hardikkaurani/devsphere-ai/blob/main/LICENSE file for details.
 
-## Acknowledgments
-- [Your Acknowledgments Here]
 
 ---
 
