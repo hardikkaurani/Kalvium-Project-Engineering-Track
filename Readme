@@ -1,151 +1,60 @@
-<h1 align="center">🧠 Engineering Track — Kalvium Capstone</h1>
-<h3 align="center">Hardik Kaurani</h3>
+# Kalvium Project Engineering Track
 
-<p align="center">
-  <b>"Most developers build features. Engineers build systems."</b>
-</p>
+## Introduction
+Welcome to the Kalvium Project Engineering Track! This project aims to equip students with practical skills in software engineering through hands-on experience and comprehensive learning.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Stack-PERN-blue?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Focus-System%20Design-orange?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Level-Engineering-red?style=for-the-badge"/>
-</p>
+## Table of Contents
+1. [Installation Instructions](#installation-instructions)
+2. [Usage](#usage)
+3. [Contributing](#contributing)
+4. [License](#license)
+5. [Contact Information](#contact-information)
 
----
+## Installation Instructions
+To set up the project locally, follow these steps:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track.git
+   ```
+2. Navigate into the project directory:
+   ```bash
+   cd Kalvium-Project-Engineering-Track
+   ```
+3. Install the necessary dependencies:
+   ```bash
+   npm install
+   ```
 
-## 📌 Overview
+## Usage
+After installation, you can start the application using:
+```bash
+npm start
+```
+Check the documentation for further usage instructions and examples.
 
-This repository is my **Engineering Track submission** for the Kalvium Capstone.
+## Contributing
+We welcome contributions! Please follow these guidelines:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open a pull request.
 
-🚫 Not a demo project  
-✅ A **system-level engineering journey**
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Each milestone represents:
-- Real-world decision making  
-- Trade-offs & constraints  
-- Scalable system thinking  
+## Contact Information
+For any queries, reach out to:
+- [Hardik Kaurani](mailto:hardikkaurani@example.com)
 
----
-
-## 🗂️ Milestones
-
-| Milestone | Focus | Status |
-|----------|------|--------|
-| M1 | Problem Definition & System Design | ✅ |
-| M2 | Database Design | ✅ |
-| M3 | Backend Architecture | ✅ |
-| M4 | Frontend Architecture | ✅ |
-| M5 | Integration & Testing | ✅ |
-
----
-
-## 🏗️ Tech Stack
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,nodejs,express,postgres,js,git,github,vscode" />
-</p>
-
----
-
-## ⚙️ System Architecture
-
-┌─────────────┐ ┌──────────────┐ ┌──────────────────┐
-│ React UI │ ──────▶│ Express API │ ──────▶│ PostgreSQL DB │
-│ (Client) │◀────── │ (Server) │◀────── │ (Data Layer) │
-└─────────────┘ └──────────────┘ └──────────────────┘
-│ │
-│ ┌─────┴──────┐
-│ │ Middleware │
-│ │ JWT Auth │
-└────────────────┴────────────┘
-
-
----
-
-## 🔄 Request Flow
-
-
-Client Request
-→ Route
-→ Middleware (JWT)
-→ Controller
-→ Service Layer
-→ Database
-→ Response
-
-
----
-
-## 🧩 Folder Structure
-
-
-project-root/
-│
-├── client/
-├── server/
-├── database/
-├── docs/
-└── README.md
-
-
----
-
-## 🔑 Key Engineering Decisions
-
-### ⚡ Service Layer Architecture
-Keeps controllers thin → scalable & testable
-
-### ⚡ PostgreSQL > MongoDB
-Relational data → SQL is better choice
-
-### ⚡ Context API over Redux
-Less boilerplate, same control
-
-### ⚡ JWT Authentication
-Stateless → better scaling
-
----
-
-## 🗃️ Database (Sample)
-
-```sql
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
-  email VARCHAR(150) UNIQUE,
-  password TEXT
-);
-🛠️ Setup
-git clone <your-repo>
-cd project
-
-cd server
-npm install
-
-cd ../client
-npm install
-🧪 Testing
-Postman API testing
-Edge cases handled
-Consistent error handling
-📈 Learnings
-Before	After
-Backend = routes	Backend = architecture
-SQL is slow	Bad queries are slow
-Auth is simple	Auth = system design
-🔭 Roadmap
- Unit Testing (Jest)
- Redis Caching
- Docker Setup
- CI/CD Pipeline
- Logging System
-📊 GitHub Stats
-<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=hardikkaurani&show_icons=true&theme=tokyonight"/> <img src="https://github-readme-streak-stats.herokuapp.com/?user=hardikkaurani&theme=tokyonight"/> </p>
-👨‍💻 Author
-
-Hardik Kaurani
-Kalvium — Engineering Track
-
-<p> <a href="https://github.com/hardikkaurani">GitHub</a> • <a href="https://linkedin.com/in/hardikkaurani">LinkedIn</a> </p>
-<p align="center"> 🚀 <b>This repo shows how I think — not just what I build.</b> </p> ```
+## Conclusion
+Thank you for visiting the Kalvium Project Engineering Track. We hope you find it valuable and educational!
