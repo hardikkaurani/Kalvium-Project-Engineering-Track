@@ -1,1 +1,236 @@
-Hello this is the readme for Project-Engineering
+# 🧠 Engineering Track — Kalvium Capstone
+### by Hardik Kaurani
+
+> *"Most developers build features. Engineers build systems."*
+
+---
+
+## 📌 What is this repo?
+
+This is my **Engineering Track submission** for the Kalvium Capstone program.
+
+It is **not a demo app**. It is a documented record of how I approached real engineering problems — milestone by milestone — using the **PERN Stack** (PostgreSQL, Express, React, Node.js).
+
+Each milestone in this repo represents:
+- A real decision I had to make
+- A problem I had to solve
+- A system I had to design — not just code
+
+---
+
+## 🗂️ Milestone Index
+
+| Milestone | Focus Area | Status |
+|-----------|-----------|--------|
+| M1 | Problem Definition & System Scoping | ✅ Done |
+| M2 | Database Design & Schema Planning | ✅ Done |
+| M3 | Backend Architecture & API Design | ✅ Done |
+| M4 | Frontend Architecture & State Design | ✅ Done |
+| M5 | Integration, Testing & Review | ✅ Done |
+
+> Each milestone folder contains its own `README.md` with decisions, diagrams, and learnings.
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| Frontend | React (Hooks + Context API) | Component-driven, scalable UI |
+| Backend | Node.js + Express.js | Lightweight, fast REST server |
+| Database | PostgreSQL | Relational integrity, complex queries |
+| Auth | JWT + Bcrypt | Stateless, secure authentication |
+| Testing | Postman + manual edge cases | API contract validation |
+| Dev Tools | Git, GitHub, VS Code | Version control, collaboration |
+
+---
+
+## ⚙️ System Architecture
+
+```
+┌─────────────┐        ┌──────────────┐        ┌──────────────────┐
+│   React UI  │ ──────▶│  Express API │ ──────▶│   PostgreSQL DB  │
+│  (Client)   │◀────── │  (Server)    │◀────── │   (Data Layer)   │
+└─────────────┘        └──────────────┘        └──────────────────┘
+       │                      │
+       │                ┌─────┴──────┐
+       │                │ Middleware │
+       │                │ JWT Auth   │
+       │                │ Error Hand │
+       └────────────────┴────────────┘
+```
+
+**Request Lifecycle:**
+```
+Client Request
+  → Route Handler
+    → Auth Middleware (JWT verify)
+      → Controller (input validation)
+        → Service Layer (business logic)
+          → Model / DB Query
+            → Response (JSON)
+```
+
+---
+
+## 🧩 Folder Structure
+
+```
+project-root/
+│
+├── client/                  # React frontend
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Route-level page components
+│   │   ├── context/         # Global state (Context API)
+│   │   ├── hooks/           # Custom React hooks
+│   │   └── utils/           # Helper functions
+│
+├── server/                  # Node + Express backend
+│   ├── controllers/         # Route logic (thin layer)
+│   ├── services/            # Business logic (core)
+│   ├── routes/              # API endpoint definitions
+│   ├── models/              # DB query functions
+│   ├── middleware/          # Auth, error handling
+│   └── config/              # DB connection, env setup
+│
+├── database/
+│   ├── schema.sql           # Table definitions
+│   └── seed.sql             # Sample data
+│
+├── docs/                    # Diagrams, API docs, decisions
+│   ├── architecture.md
+│   ├── api-reference.md
+│   └── db-schema.png
+│
+└── README.md
+```
+
+---
+
+## 🔑 Key Engineering Decisions
+
+### 1. Why Service Layer between Controller and Model?
+Controllers should be thin — they only validate input and call services.  
+Business logic lives in the service layer so it can be tested independently and reused across routes.  
+This prevents the "fat controller" problem common in beginner Express apps.
+
+### 2. Why PostgreSQL over MongoDB?
+The data in this system is relational by nature. Using a document store would have meant either duplicating data or doing joins in application code — both worse than just using SQL properly.  
+PostgreSQL also gives us strong type guarantees and ACID compliance, which MongoDB doesn't offer by default.
+
+### 3. Why Context API instead of Redux?
+Redux adds real overhead — actions, reducers, thunks. For the scale of this app, Context + useReducer gives us the same predictable state management without the boilerplate. The decision was deliberate, not a shortcut.
+
+### 4. JWT over Sessions
+Sessions require server-side state, which breaks horizontal scaling. JWT keeps auth stateless — the server doesn't need to remember anything. Trade-off: tokens can't be invalidated early, so short expiry + refresh token pattern is used.
+
+---
+
+## 🗃️ Database Schema (Overview)
+
+```sql
+-- Users table
+CREATE TABLE users (
+  id         SERIAL PRIMARY KEY,
+  name       VARCHAR(100) NOT NULL,
+  email      VARCHAR(150) UNIQUE NOT NULL,
+  password   TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- (Additional tables documented in /database/schema.sql)
+```
+
+Indexes applied on:
+- `users.email` — for fast login lookup
+- Foreign key columns — for JOIN performance
+
+---
+
+## 🛠️ Local Setup
+
+```bash
+# 1. Clone the repo
+git clone <your-repo-link>
+cd project-name
+
+# 2. Setup backend
+cd server
+npm install
+cp .env.example .env   # Fill in your values
+
+# 3. Setup database
+psql -U postgres -f database/schema.sql
+
+# 4. Setup frontend
+cd ../client
+npm install
+
+# 5. Run both
+# Terminal 1
+cd server && npm run dev
+
+# Terminal 2
+cd client && npm start
+```
+
+**Environment Variables (server/.env):**
+```
+PORT=5000
+DATABASE_URL=postgresql://localhost:5432/yourdb
+JWT_SECRET=your_secret_here
+JWT_EXPIRES_IN=7d
+```
+
+---
+
+## 🧪 Testing Approach
+
+- All API endpoints tested via **Postman collections** (saved in `/docs/postman/`)
+- Edge cases covered: invalid input, missing auth token, duplicate records, empty responses
+- Error responses follow consistent structure:
+
+```json
+{
+  "success": false,
+  "error": "Descriptive error message here"
+}
+```
+
+---
+
+## 📈 What I Actually Learned (Honest)
+
+| What I thought before | What I learned |
+|-----------------------|----------------|
+| Backend = just write routes | Controllers, services, models are separate concerns |
+| SQL is slow | Bad queries are slow. Proper indexes change everything |
+| Auth is just login/signup | Token lifecycle, expiry, and security matter a lot |
+| Frontend state is simple | Global state requires real architecture decisions |
+| README is documentation | README is communication — to humans, not machines |
+
+---
+
+## 🔭 What's Next (Honest Roadmap)
+
+- [ ] Write proper unit tests (Jest + Supertest)
+- [ ] Add Redis caching for frequent DB reads
+- [ ] Containerize with Docker
+- [ ] Add GitHub Actions CI pipeline
+- [ ] Structured logging (Winston / Morgan)
+
+These are not here to sound impressive. They're here because the current version doesn't have them — and I know it.
+
+---
+
+## 👨‍💻 Author
+
+**Hardik Kaurani**  
+Kalvium — Engineering Track, Capstone  
+[GitHub](https://github.com/hardikkaurani) · [LinkedIn](https://linkedin.com/in/hardikkaurani)
+
+---
+
+> This repo documents how I think, not just what I built.  
+> Structure, decisions, and trade-offs matter more than feature count.
