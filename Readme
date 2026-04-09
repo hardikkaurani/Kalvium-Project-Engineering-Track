@@ -1,266 +1,151 @@
-<h1>🧠 Engineering Track — Kalvium Capstone</h1>
-<h3>by Hardik Kaurani</h3>
-<blockquote>
-<p>\*&quot;Most developers build features. Engineers build systems.&quot;\*</p>
-</blockquote>
-<p>---</p>
-<h2>📌 What is this repo?</h2>
-<p>This is my <strong>Engineering Track submission</strong> for the Kalvium Capstone program.</p>
-<p>It is <strong>not a demo app</strong>. It is a documented record of how I approached real engineering problems — milestone by milestone — using the <strong>PERN Stack</strong> (PostgreSQL, Express, React, Node.js).</p>
-<p>Each milestone in this repo represents:</p>
-<ul>
-<li>A real decision I had to make</li>
-<li>A problem I had to solve</li>
-<li>A system I had to design — not just code</li>
-</ul>
-<p>---</p>
-<h2>🗂️ Milestone Index</h2>
-<table>
-<thead>
-<tr>
-<th>Milestone</th>
-<th>Focus Area</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>M1</td>
-<td>Problem Definition &amp; System Scoping</td>
-<td>✅ Done</td>
-</tr>
-<tr>
-<td>M2</td>
-<td>Database Design &amp; Schema Planning</td>
-<td>✅ Done</td>
-</tr>
-<tr>
-<td>M3</td>
-<td>Backend Architecture &amp; API Design</td>
-<td>✅ Done</td>
-</tr>
-<tr>
-<td>M4</td>
-<td>Frontend Architecture &amp; State Design</td>
-<td>✅ Done</td>
-</tr>
-<tr>
-<td>M5</td>
-<td>Integration, Testing &amp; Review</td>
-<td>✅ Done</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>Each milestone folder contains its own <code>README.md</code> with decisions, diagrams, and learnings.</p>
-</blockquote>
-<p>---</p>
-<h2>🏗️ Tech Stack</h2>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Technology</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Frontend</td>
-<td>React (Hooks + Context API)</td>
-<td>Component-driven, scalable UI</td>
-</tr>
-<tr>
-<td>Backend</td>
-<td>Node.js + Express.js</td>
-<td>Lightweight, fast REST server</td>
-</tr>
-<tr>
-<td>Database</td>
-<td>PostgreSQL</td>
-<td>Relational integrity, complex queries</td>
-</tr>
-<tr>
-<td>Auth</td>
-<td>JWT + Bcrypt</td>
-<td>Stateless, secure authentication</td>
-</tr>
-<tr>
-<td>Testing</td>
-<td>Postman + manual edge cases</td>
-<td>API contract validation</td>
-</tr>
-<tr>
-<td>Dev Tools</td>
-<td>Git, GitHub, VS Code</td>
-<td>Version control, collaboration</td>
-</tr>
-</tbody></table>
-<p>---</p>
-<h2>⚙️ System Architecture</h2>
-<pre><code>┌─────────────┐        ┌──────────────┐        ┌──────────────────┐
-│   React UI  │ ──────▶│  Express API │ ──────▶│   PostgreSQL DB  │
-│  (Client)   │◀────── │  (Server)    │◀────── │   (Data Layer)   │
-└─────────────┘        └──────────────┘        └──────────────────┘
-       │                      │
-       │                ┌─────┴──────┐
-       │                │ Middleware │
-       │                │ JWT Auth   │
-       │                │ Error Hand │
-       └────────────────┴────────────┘
-</code></pre>
-<p><strong>Request Lifecycle:</strong></p>
-<pre><code>Client Request
-  → Route Handler
-    → Auth Middleware (JWT verify)
-      → Controller (input validation)
-        → Service Layer (business logic)
-          → Model / DB Query
-            → Response (JSON)
-</code></pre>
-<p>---</p>
-<h2>🧩 Folder Structure</h2>
-<pre><code>project-root/
+<h1 align="center">🧠 Engineering Track — Kalvium Capstone</h1>
+<h3 align="center">Hardik Kaurani</h3>
+
+<p align="center">
+  <b>"Most developers build features. Engineers build systems."</b>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Stack-PERN-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Focus-System%20Design-orange?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Level-Engineering-red?style=for-the-badge"/>
+</p>
+
+---
+
+## 📌 Overview
+
+This repository is my **Engineering Track submission** for the Kalvium Capstone.
+
+🚫 Not a demo project  
+✅ A **system-level engineering journey**
+
+Each milestone represents:
+- Real-world decision making  
+- Trade-offs & constraints  
+- Scalable system thinking  
+
+---
+
+## 🗂️ Milestones
+
+| Milestone | Focus | Status |
+|----------|------|--------|
+| M1 | Problem Definition & System Design | ✅ |
+| M2 | Database Design | ✅ |
+| M3 | Backend Architecture | ✅ |
+| M4 | Frontend Architecture | ✅ |
+| M5 | Integration & Testing | ✅ |
+
+---
+
+## 🏗️ Tech Stack
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=react,nodejs,express,postgres,js,git,github,vscode" />
+</p>
+
+---
+
+## ⚙️ System Architecture
+
+┌─────────────┐ ┌──────────────┐ ┌──────────────────┐
+│ React UI │ ──────▶│ Express API │ ──────▶│ PostgreSQL DB │
+│ (Client) │◀────── │ (Server) │◀────── │ (Data Layer) │
+└─────────────┘ └──────────────┘ └──────────────────┘
+│ │
+│ ┌─────┴──────┐
+│ │ Middleware │
+│ │ JWT Auth │
+└────────────────┴────────────┘
+
+
+---
+
+## 🔄 Request Flow
+
+
+Client Request
+→ Route
+→ Middleware (JWT)
+→ Controller
+→ Service Layer
+→ Database
+→ Response
+
+
+---
+
+## 🧩 Folder Structure
+
+
+project-root/
 │
-├── client/                  # React frontend
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── pages/           # Route-level page components
-│   │   ├── context/         # Global state (Context API)
-│   │   ├── hooks/           # Custom React hooks
-│   │   └── utils/           # Helper functions
-│
-├── server/                  # Node + Express backend
-│   ├── controllers/         # Route logic (thin layer)
-│   ├── services/            # Business logic (core)
-│   ├── routes/              # API endpoint definitions
-│   ├── models/              # DB query functions
-│   ├── middleware/          # Auth, error handling
-│   └── config/              # DB connection, env setup
-│
+├── client/
+├── server/
 ├── database/
-│   ├── schema.sql           # Table definitions
-│   └── seed.sql             # Sample data
-│
-├── docs/                    # Diagrams, API docs, decisions
-│   ├── architecture.md
-│   ├── api-reference.md
-│   └── db-schema.png
-│
+├── docs/
 └── README.md
-</code></pre>
-<p>---</p>
-<h2>🔑 Key Engineering Decisions</h2>
-<h3>1. Why Service Layer between Controller and Model?</h3>
-<p>Controllers should be thin — they only validate input and call services.<br>Business logic lives in the service layer so it can be tested independently and reused across routes.<br>This prevents the &quot;fat controller&quot; problem common in beginner Express apps.</p>
-<h3>2. Why PostgreSQL over MongoDB?</h3>
-<p>The data in this system is relational by nature. Using a document store would have meant either duplicating data or doing joins in application code — both worse than just using SQL properly.<br>PostgreSQL also gives us strong type guarantees and ACID compliance, which MongoDB doesn&#39;t offer by default.</p>
-<h3>3. Why Context API instead of Redux?</h3>
-<p>Redux adds real overhead — actions, reducers, thunks. For the scale of this app, Context + useReducer gives us the same predictable state management without the boilerplate. The decision was deliberate, not a shortcut.</p>
-<h3>4. JWT over Sessions</h3>
-<p>Sessions require server-side state, which breaks horizontal scaling. JWT keeps auth stateless — the server doesn&#39;t need to remember anything. Trade-off: tokens can&#39;t be invalidated early, so short expiry + refresh token pattern is used.</p>
-<p>---</p>
-<h2>🗃️ Database Schema (Overview)</h2>
-<pre><code class="language-sql">-- Users table
+
+
+---
+
+## 🔑 Key Engineering Decisions
+
+### ⚡ Service Layer Architecture
+Keeps controllers thin → scalable & testable
+
+### ⚡ PostgreSQL > MongoDB
+Relational data → SQL is better choice
+
+### ⚡ Context API over Redux
+Less boilerplate, same control
+
+### ⚡ JWT Authentication
+Stateless → better scaling
+
+---
+
+## 🗃️ Database (Sample)
+
+```sql
 CREATE TABLE users (
-  id         SERIAL PRIMARY KEY,
-  name       VARCHAR(100) NOT NULL,
-  email      VARCHAR(150) UNIQUE NOT NULL,
-  password   TEXT NOT NULL,
-  created\\\_at TIMESTAMP DEFAULT NOW()
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(150) UNIQUE,
+  password TEXT
 );
+🛠️ Setup
+git clone <your-repo>
+cd project
 
--- (Additional tables documented in /database/schema.sql)
-</code></pre>
-<p>Indexes applied on:</p>
-<ul>
-<li><code>users.email</code> — for fast login lookup</li>
-<li>Foreign key columns — for JOIN performance</li>
-</ul>
-<p>---</p>
-<h2>🛠️ Local Setup</h2>
-<pre><code class="language-bash"># 1. Clone the repo
-git clone &lt;your-repo-link&gt;
-cd project-name
-
-# 2. Setup backend
 cd server
 npm install
-cp .env.example .env   # Fill in your values
 
-# 3. Setup database
-psql -U postgres -f database/schema.sql
-
-# 4. Setup frontend
 cd ../client
 npm install
+🧪 Testing
+Postman API testing
+Edge cases handled
+Consistent error handling
+📈 Learnings
+Before	After
+Backend = routes	Backend = architecture
+SQL is slow	Bad queries are slow
+Auth is simple	Auth = system design
+🔭 Roadmap
+ Unit Testing (Jest)
+ Redis Caching
+ Docker Setup
+ CI/CD Pipeline
+ Logging System
+📊 GitHub Stats
+<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=hardikkaurani&show_icons=true&theme=tokyonight"/> <img src="https://github-readme-streak-stats.herokuapp.com/?user=hardikkaurani&theme=tokyonight"/> </p>
+👨‍💻 Author
 
-# 5. Run both
-# Terminal 1
-cd server \\\&amp;\\\&amp; npm run dev
+Hardik Kaurani
+Kalvium — Engineering Track
 
-# Terminal 2
-cd client \\\&amp;\\\&amp; npm start
-</code></pre>
-<p><strong>Environment Variables (server/.env):</strong></p>
-<pre><code>PORT=5000
-DATABASE\\\_URL=postgresql://localhost:5432/yourdb
-JWT\\\_SECRET=your\\\_secret\\\_here
-JWT\\\_EXPIRES\\\_IN=7d
-</code></pre>
-<p>---</p>
-<h2>🧪 Testing Approach</h2>
-<ul>
-<li>All API endpoints tested via <strong>Postman collections</strong> (saved in <code>/docs/postman/</code>)</li>
-<li>Edge cases covered: invalid input, missing auth token, duplicate records, empty responses</li>
-<li>Error responses follow consistent structure:</li>
-</ul>
-<pre><code class="language-json">{
-  &quot;success&quot;: false,
-  &quot;error&quot;: &quot;Descriptive error message here&quot;
-}
-</code></pre>
-<p>---</p>
-<h2>📈 What I Actually Learned (Honest)</h2>
-<table>
-<thead>
-<tr>
-<th>What I thought before</th>
-<th>What I learned</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Backend = just write routes</td>
-<td>Controllers, services, models are separate concerns</td>
-</tr>
-<tr>
-<td>SQL is slow</td>
-<td>Bad queries are slow. Proper indexes change everything</td>
-</tr>
-<tr>
-<td>Auth is just login/signup</td>
-<td>Token lifecycle, expiry, and security matter a lot</td>
-</tr>
-<tr>
-<td>Frontend state is simple</td>
-<td>Global state requires real architecture decisions</td>
-</tr>
-<tr>
-<td>README is documentation</td>
-<td>README is communication — to humans, not machines</td>
-</tr>
-</tbody></table>
-<p>---</p>
-<h2>🔭 What&#39;s Next (Honest Roadmap)</h2>
-<ul>
-<li>[ ] Write proper unit tests (Jest + Supertest)</li>
-<li>[ ] Add Redis caching for frequent DB reads</li>
-<li>[ ] Containerize with Docker</li>
-<li>[ ] Add GitHub Actions CI pipeline</li>
-<li>[ ] Structured logging (Winston / Morgan)</li>
-</ul>
-<p>These are not here to sound impressive. They&#39;re here because the current version doesn&#39;t have them — and I know it.</p>
-<p>---</p>
-<h2>👨‍💻 Author</h2>
-<p><strong>Hardik Kaurani</strong><br>Kalvium — Engineering Track, Capstone<br><a href="https://github.com/hardikkaurani">GitHub</a> · <a href="https://linkedin.com/in/hardikkaurani">LinkedIn</a></p>
-<p>---</p>
-<blockquote>
-<p>This repo documents how I think, not just what I built.<br>Structure, decisions, and trade-offs matter more than feature count.</p>
-</blockquote>
+<p> <a href="https://github.com/hardikkaurani">GitHub</a> • <a href="https://linkedin.com/in/hardikkaurani">LinkedIn</a> </p>
+<p align="center"> 🚀 <b>This repo shows how I think — not just what I build.</b> </p> ```
