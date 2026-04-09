@@ -98,7 +98,7 @@ Make sure the services are running before running integration tests.
    Provide a detailed description of the changes made.
 
 ## License
-This project is licensed under the MIT License. See the https://github.com/hardikkaurani/devsphere-ai/blob/main/LICENSE file for details.
+This project is licensed under the MIT License.
 
 
 ---
