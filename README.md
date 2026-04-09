@@ -6,7 +6,7 @@ This project aims to provide an extensive engineering track tailored for develop
 ## Technology Stack
 - **Backend:** Node.js, Express
 - **Frontend:** React
-- **Database:** MongoDB
+- **Database:** MongoDB, Postgrey SQL
 - **Testing:** Jest, Mocha
 - **Deployment:** Docker, AWS
 
