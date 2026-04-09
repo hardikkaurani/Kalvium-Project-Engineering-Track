@@ -13,7 +13,49 @@ This project aims to provide an extensive engineering track tailored for develop
 ## Architecture
 The project follows a microservices architecture, allowing for independent deployments and scalability. The services communicate through REST APIs and are managed using Docker containers.
 
-![Architecture Diagram](link-to-your-architecture-diagram)
+┌─────────────────────────────────────────────────────────────┐
+│                    CLIENT LAYER (React)                      │
+│              Components → Hooks → Context API                │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+                    ┌──────▼───────┐
+                    │   HTTP/REST  │
+                    │   (JSON)     │
+                    └──────┬───────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────┐
+│                  SERVER LAYER (Express)                      │
+│  Routes → Controllers → Services → Models → Database        │
+├─ JWT Authentication Middleware ────────────────────────────┤
+├─ Request Validation Middleware ──────────────────���─────────┤
+├─ Error Handling Middleware ────────────────────────────────┤
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+                    ┌──────▼───────┐
+                    │   SQL Query  │
+                    │  Connection  │
+                    └──────┬───────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────┐
+│              DATABASE LAYER (PostgreSQL)                     │
+│          Tables → Indexes → Constraints → ACID              │
+└──────────────────────────────────────────────────────────────┘
+
+
+1. Client Request (React Component)
+   ↓
+2. Route Matching (Express Router)
+   ↓
+3. Middleware Stack (Auth → Validation → Logging)
+   ↓
+4. Controller Layer (Request handling)
+   ↓
+5. Service Layer (Business logic)
+   ↓
+6. Model Layer (Database queries)
+   ↓
+7. Response (JSON format)
+
 
 ## Setup Instructions
 1. **Clone the repository:**  
