@@ -8,8 +8,8 @@ router.post('/', confessionController.createConfession);
 // Get all confessions
 router.get('/', confessionController.getAllConfessions);
 
-// Get confessions by category
-router.get('/category/:cat', confessionController.getConfessionsByCategory);
+// Get confessions by category (parameter: cat → category)
+router.get('/category/:category', confessionController.getConfessionsByCategory);
 
 // Get confession by ID
 router.get('/:id', confessionController.getConfessionById);
