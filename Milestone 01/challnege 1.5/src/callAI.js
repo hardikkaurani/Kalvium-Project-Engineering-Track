@@ -10,10 +10,26 @@ const systemPrompt = fs.readFileSync(systemPromptPath, 'utf8');
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const API_KEY = process.env.OPENROUTER_API_KEY;
 const MODEL = process.env.MODEL || 'openai/gpt-3.5-turbo';
+const PROMPT_TOKEN_RATE_PER_1K = 0.0005;
+const COMPLETION_TOKEN_RATE_PER_1K = 0.0015;
+
+function estimateCost(usage = {}) {
+  const promptTokens = Number(usage.prompt_tokens) || 0;
+  const completionTokens = Number(usage.completion_tokens) || 0;
+
+  return (
+    (promptTokens / 1000) * PROMPT_TOKEN_RATE_PER_1K +
+    (completionTokens / 1000) * COMPLETION_TOKEN_RATE_PER_1K
+  );
+}
 
 // Review code using AI
 async function reviewCode(code) {
   try {
+    if (!API_KEY) {
+      throw new Error('OPENROUTER_API_KEY is not set.');
+    }
+
     const response = await axios.post(
       API_URL,
       {
@@ -39,9 +55,18 @@ async function reviewCode(code) {
       }
     );
 
+    const usage = response.data.usage || {};
+    const estimatedCost = estimateCost(usage);
+
+    console.log('Token usage:');
+    console.log(`  prompt_tokens: ${usage.prompt_tokens || 0}`);
+    console.log(`  completion_tokens: ${usage.completion_tokens || 0}`);
+    console.log(`  total_tokens: ${usage.total_tokens || 0}`);
+    console.log(`  estimated_cost: $${estimatedCost.toFixed(6)}`);
+
     return {
       content: response.data.choices[0].message.content,
-      tokens: response.data.usage.total_tokens,
+      tokens: usage.total_tokens || 0,
       model: MODEL,
     };
   } catch (error) {

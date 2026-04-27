@@ -1,82 +1,54 @@
 # Token Audit Report
 
 ## Objective
-Optimize the AI system prompt to reduce token usage while maintaining effectiveness.
+Reduce prompt tokens without removing any instruction.
 
-## Current State
-- **File:** `prompts/system-prompt.txt`
-- **Original Token Count:** [TO BE CALCULATED]
-- **Current Status:** Under Audit
+## Files
+- `prompts/system-prompt.txt` — rewritten system prompt
+- `src/callAI.js` — token usage and cost logging
 
-## Analysis
+## Token counts
 
-### Issues Identified
-1. **Redundancy in Instructions**
-   - Repetitive mentions of "code review"
-   - Multiple similar performance recommendations
-   
-2. **Verbose Phrasing**
-   - Long explanatory sentences that can be condensed
-   - Unnecessary qualifiers and adjectives
+Estimated with a simple regex-based token heuristic.
 
-3. **List Duplication**
-   - Overlap between initial requirements and detailed guidelines
-   - Redundant "provide feedback" phrasing
+| Version | Token count | Character count | Reduction |
+|---|---:|---:|---:|
+| Original | 191 | 1,121 | — |
+| New | 104 | 523 | 45.5% |
 
-### Optimization Strategy
+## 3 token-waste sources
 
-#### Before
-```
-Original prompt tokens: [COUNT]
-Character count: [COUNT]
-```
+| Pattern | Location | Explanation |
+|---|---|---|
+| Repeated review framing | Opening paragraph + closing paragraph | The prompt says “expert code reviewer,” “technical feedback,” “thorough,” “constructive,” “best practices,” and “improve” in multiple places. One compact framing is enough. |
+| Duplicated checklist language | Numbered list items 1-10 | Several items overlap semantically, such as performance vs optimization opportunities, readability vs maintainability, and code quality vs architecture. Grouping them cuts repeated setup text. |
+| Verbose output guidance | “For each review, provide…” section | The output requirements are written as full sentences with extra filler. A short bulleted list conveys the same required response structure with fewer tokens. |
 
-#### After (Optimized)
-```
-Optimized prompt tokens: [COUNT]
-Character count: [COUNT]
-Reduction: [COUNT] tokens ([PERCENTAGE]%)
-```
+## Rewritten prompt impact
 
-## Changes Made
+| Metric | Original | New | Delta |
+|---|---:|---:|---:|
+| Prompt tokens | 191 | 104 | -87 |
+| Prompt token cost/call* | $0.000096 | $0.000052 | -$0.000044 |
+| Monthly prompt cost at 90,000 calls* | $8.60 | $4.68 | -$3.92 |
 
-### 1. Consolidated Instructions
-- Merged similar review categories
-- Removed redundant check items
-- Streamlined the guidance section
+*Estimated with $0.0005 / 1K prompt tokens.
 
-### 2. Reduced Verbosity
-- Shortened explanatory sentences
-- Used bullet points instead of prose
-- Removed unnecessary adjectives
+## Cost comparison table
 
-### 3. Improved Clarity
-- Made instructions more direct
-- Simplified complex sentences
-- Maintained technical accuracy
+| Scenario | Prompt tokens/call | Cost/call | Cost for 90,000 calls |
+|---|---:|---:|---:|
+| Original prompt | 191 | $0.000096 | $8.60 |
+| Optimized prompt | 104 | $0.000052 | $4.68 |
+| Savings | 87 | $0.000044 | $3.92 |
 
-## Results
+## Monthly cost calculation
 
-| Metric | Original | Optimized | Change |
-|--------|----------|-----------|--------|
-| Token Count | - | - | - |
-| Character Count | - | - | - |
-| Clarity Score | - | - | - |
-| Effectiveness | - | - | - |
+- Calls per month: 90,000
+- Prompt token savings per call: 87
+- Rate used: $0.0005 per 1K prompt tokens
+- Monthly savings: $(87 / 1000) × 0.0005 × 90,000 = $3.92$
 
-## Recommendations
-
-1. ✅ Use the optimized prompt in production
-2. ✅ Monitor API response quality
-3. ✅ A/B test with users if needed
-4. ✅ Document token savings over time
-
-## Submission
-
-**Submitted by:** [Your Name]
-**Date:** 2026-04-09
-**Status:** Ready for Review
-
----
-
-**Note:** Replace placeholder values with actual calculations and measurements.
+## Notes
+- The prompt keeps every original instruction; only wording was compressed.
+- The app now logs `prompt_tokens`, `completion_tokens`, `total_tokens`, and estimated cost after each API response.
