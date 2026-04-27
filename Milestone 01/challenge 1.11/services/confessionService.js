@@ -1,5 +1,5 @@
-// Mock in-memory data store
-let confessions = [
+// In-memory data store for confessions (mock database)
+let confessionMemoryStore = [
   {
     id: 1,
     title: 'First confession',
@@ -10,7 +10,8 @@ let confessions = [
   },
 ];
 
-let nextId = 2;
+// Counter for auto-incrementing confession IDs
+let confessionIdCounter = parseInt(process.env.INITIAL_CONFESSION_ID) || 2;
 
 // Create a new confession
 const createConfession = async (confessionData) => {
