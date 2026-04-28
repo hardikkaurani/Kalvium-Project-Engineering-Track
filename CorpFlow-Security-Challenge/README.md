@@ -1,141 +1,31 @@
-# CorpFlow - Multi-Tenant Security Refactoring Challenge
+# CorpFlow Security Challenge
 
-**Production SaaS Platform Security Hardening**
+This submission refactors the insecure CorpFlow schema into a tenant-safe PostgreSQL design with schema-enforced tenant isolation, RBAC metadata, sensitive-field access rules, and tenant-first indexes.
 
-## 🎯 Objective
+## Deliverables
 
-Transform an insecure SaaS schema into a production-grade multi-tenant system with:
-- ✅ Tenant isolation
-- ✅ Role-based access control (RBAC)
-- ✅ Sensitive field protection
-- ✅ Performance optimization (indexes)
-- ✅ Data integrity constraints
+- [INSECURE_SCHEMA.sql](./INSECURE_SCHEMA.sql)
+- [AUDIT.md](./AUDIT.md)
+- [SECURE_SCHEMA_PHASE2.sql](./SECURE_SCHEMA_PHASE2.sql)
+- [RBAC_IMPLEMENTATION.sql](./RBAC_IMPLEMENTATION.sql)
+- [API_SECURITY_LAYER.js](./API_SECURITY_LAYER.js)
+- [SECURITY.md](./SECURITY.md)
 
-## 🔴 Current State: INSECURE
+## What Changed
 
-The system has **7 critical security issues**:
-1. No tenant isolation - all data mixed
-2. Exposed sensitive fields (salary, banking info)
-3. Weak RBAC - role is just a string
-4. Missing indexes - performance issues
-5. Weak foreign key constraints
-6. No field-level access control
-7. Cross-tenant data access risk
+1. `AUDIT.md` documents exact schema flaws and consequences.
+2. `SECURE_SCHEMA_PHASE2.sql` introduces:
+   - `tenants`
+   - `tenant_id` on every tenant-owned table
+   - composite foreign keys for same-tenant integrity
+   - stricter `NOT NULL`, `CHECK`, and tenant-scoped `UNIQUE` constraints
+   - tenant-first composite indexes
+3. `RBAC_IMPLEMENTATION.sql` seeds the fixed role set and field-level permission matrix.
+4. `API_SECURITY_LAYER.js` maps raw rows into safe response objects by role and assumes all reads are tenant-scoped.
+5. `SECURITY.md` explains sensitive data handling and how cross-tenant access is blocked.
 
-## 📋 Refactoring Steps (7 Phases)
+## Notes
 
-### Phase 1: Schema Analysis ✅ DONE
-- [x] AUDIT.md - Identified all security issues
-- [x] INSECURE_SCHEMA.sql - Current problematic schema
-- [x] README.md - This file
-
-### Phase 2: Multi-Tenancy Implementation 🔄 IN PROGRESS
-- [ ] Create tenants table
-- [ ] Add tenant_id to all tables
-- [ ] Add tenant constraints and indexes
-
-### Phase 3: RBAC Implementation
-- [ ] Create roles enumeration
-- [ ] Create permissions table
-- [ ] Define role-permission mappings
-
-### Phase 4: Sensitive Field Protection
-- [ ] Identify sensitive fields
-- [ ] Create response DTOs
-- [ ] Implement field filtering
-
-### Phase 5: API Security Layer
-- [ ] Secure API responses
-- [ ] Role-based filtering
-- [ ] Tenant isolation queries
-
-### Phase 6: Performance Optimization
-- [ ] Add composite indexes
-- [ ] Add missing indexes
-- [ ] Query optimization
-
-### Phase 7: Security Documentation
-- [ ] SECURITY.md - Architecture & strategy
-- [ ] MIGRATION.md - Migration guide
-
-## 📁 Files
-
-- **AUDIT.md** - Detailed security audit (7 issues found)
-- **INSECURE_SCHEMA.sql** - Current problematic schema
-- **SECURE_SCHEMA_PHASE2.sql** - Multi-tenant refactored schema (coming)
-- **RBAC_IMPLEMENTATION.sql** - Role & permission tables (coming)
-- **API_SECURITY_LAYER.js** - Express API with field filtering (coming)
-- **SECURITY.md** - Complete security architecture (coming)
-- **MIGRATION.md** - Migration from old to new schema (coming)
-
-## 🚀 Quick Start
-
-1. **Review the Issues**:
-   ```bash
-   cat AUDIT.md # See all 7 security issues
-   ```
-
-2. **Understand Current Schema**:
-   ```bash
-   psql < INSECURE_SCHEMA.sql
-   ```
-
-3. **Follow the Refactoring**:
-   - Each phase adds a new file
-   - Each phase builds on previous work
-   - No breaking changes to API
-
-## 🔐 Key Concepts Covered
-
-### Multi-Tenancy
-- Tenant isolation at schema level
-- Same database, isolated data
-- Enforced through foreign keys
-
-### RBAC
-- Role hierarchy
-- Permission matrix
-- Field-level access control
-
-### Sensitive Field Protection
-- Identifying sensitive fields
-- Role-based filtering
-- Safe response objects
-
-### Performance
-- Strategic indexes
-- Composite keys
-- Query optimization
-
-## 📊 Learning Outcomes
-
-After completing CorpFlow, you'll understand:
-- ✅ How real SaaS systems handle multi-tenancy
-- ✅ RBAC implementation patterns
-- ✅ Sensitive data handling best practices
-- ✅ API security architecture
-- ✅ Database optimization techniques
-- ✅ Production-level system design
-
-## 💡 Real-World Applications
-
-This pattern applies to:
-- SaaS platforms (Slack, Asana, Notion)
-- Multi-org systems (GitHub organizations)
-- Enterprise software (Salesforce, NetSuite)
-- Healthcare systems (HIPAA compliance)
-- Financial platforms (PCI-DSS compliance)
-
-## 📖 References
-
-- Multi-tenancy: Row-Level Security in PostgreSQL
-- RBAC: Permission Matrix Design
-- Security: OWASP Top 10
-- Performance: Index Strategy
-
----
-
-**Status**: 🔄 Phase 2 - Multi-Tenancy Implementation (Next)  
-**Difficulty**: Intermediate to Advanced  
-**Time to Complete**: 2-3 hours  
-**Prerequisites**: SQL, REST APIs, Node.js basics
+- The database fix is PostgreSQL-oriented and avoids invalid inline index syntax.
+- Same-tenant integrity is enforced at the schema level with composite foreign keys instead of application-only checks.
+- API behavior is preserved at the resource level, but sensitive fields are intentionally filtered based on role.

@@ -1,7 +1,7 @@
 # CorpFlow Security Audit
 
 **Date**: April 28, 2026  
-**Scope**: [INSECURE_SCHEMA.sql](/c:/Users/hardi/Kalvium-Project-Engineering-Track/CorpFlow-Security-Challenge/INSECURE_SCHEMA.sql)  
+**Scope**: `INSECURE_SCHEMA.sql`  
 **Status**: Critical remediation required before production use
 
 ## Scope And Validation
