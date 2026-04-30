@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getProducts } from '../services/productService';
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -7,27 +8,18 @@ function ProductsPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // PROBLEM: Hardcoded URL, .then pattern, no centralized error handling
-    fetch('https://fakestoreapi.com/products')
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 401) {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/login';
-            return;
-          }
-          throw new Error('Failed to fetch products');
-        }
-        return res.json();
-      })
-      .then((data) => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await getProducts();
         setProducts(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         setError(err.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   if (loading) {

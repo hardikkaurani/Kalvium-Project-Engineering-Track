@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getUserProfile, updateUserProfile } from '../services/productService';
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -13,26 +14,9 @@ function ProfilePage() {
   });
 
   useEffect(() => {
-    // PROBLEM: Hardcoded URL, manual token, async/await
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('auth_token');
-        const response = await fetch('https://fakestoreapi.com/users/1', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/login';
-            return;
-          }
-          throw new Error('Failed to fetch profile');
-        }
-
-        const data = await response.json();
+        const { data } = await getUserProfile(1);
         setUser(data);
         setFormData({
           firstname: data.name?.firstname || '',
@@ -50,51 +34,30 @@ function ProfilePage() {
     fetchProfile();
   }, []);
 
-  const handleUpdateProfile = (e) => {
+  const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
-    // PROBLEM: Hardcoded URL, manual token, .then pattern
-    const token = localStorage.getItem('auth_token');
-
-    fetch('https://fakestoreapi.com/users/1', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+    try {
+      await updateUserProfile(1, {
         email: formData.email,
         name: {
           firstname: formData.firstname,
           lastname: formData.lastname,
         },
         phone: formData.phone,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 401) {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/login';
-            return;
-          }
-          throw new Error('Failed to update profile');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setUser({
-          ...user,
-          email: formData.email,
-          name: { firstname: formData.firstname, lastname: formData.lastname },
-          phone: formData.phone,
-        });
-        setEditing(false);
-        alert('Profile updated successfully!');
-      })
-      .catch((err) => {
-        alert('Error: ' + err.message);
       });
+
+      setUser({
+        ...user,
+        email: formData.email,
+        name: { firstname: formData.firstname, lastname: formData.lastname },
+        phone: formData.phone,
+      });
+      setEditing(false);
+      alert('Profile updated successfully!');
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
   };
 
   if (loading) {

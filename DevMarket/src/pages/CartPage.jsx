@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getCartByUser, getProductById, updateCart } from '../services/productService';
 
 function CartPage() {
   const [cart, setCart] = useState(null);
@@ -8,82 +9,48 @@ function CartPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // PROBLEM: Hardcoded URL, manual token retrieval, nested .then chains
-    const token = localStorage.getItem('auth_token');
+    const fetchCart = async () => {
+      try {
+        const { data: carts } = await getCartByUser(1);
 
-    fetch('https://fakestoreapi.com/carts/user/1', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 401) {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/login';
-            return;
-          }
-          throw new Error('Failed to fetch cart');
-        }
-        return res.json();
-      })
-      .then((carts) => {
         if (carts && carts.length > 0) {
           const latestCart = carts[carts.length - 1];
           setCart(latestCart);
 
-          // PROBLEM: Nested fetch calls with hardcoded URLs
-          const productPromises = latestCart.products.map((item) =>
-            fetch(`https://fakestoreapi.com/products/${item.productId}`)
-              .then((res) => res.json())
-              .then((product) => ({
-                ...product,
-                quantity: item.quantity,
-              }))
-          );
+          const productPromises = latestCart.products.map(async (item) => {
+            const { data: product } = await getProductById(item.productId);
+            return { ...product, quantity: item.quantity };
+          });
 
-          return Promise.all(productPromises);
+          const products = await Promise.all(productPromises);
+          setCartProducts(products);
         }
-        return [];
-      })
-      .then((products) => {
-        setCartProducts(products || []);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         setError(err.message);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCart();
   }, []);
 
-  const handleRemoveItem = (productId) => {
-    // PROBLEM: Hardcoded URL, manual token
-    const token = localStorage.getItem('auth_token');
+  const handleRemoveItem = async (productId) => {
+    try {
+      const updatedProducts = cartProducts
+        .filter((p) => p.id !== productId)
+        .map((p) => ({ productId: p.id, quantity: p.quantity }));
 
-    fetch(`https://fakestoreapi.com/carts/1`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+      await updateCart(1, {
         userId: 1,
         date: new Date().toISOString(),
-        products: cartProducts
-          .filter((p) => p.id !== productId)
-          .map((p) => ({ productId: p.id, quantity: p.quantity })),
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to update cart');
-        return res.json();
-      })
-      .then(() => {
-        setCartProducts(cartProducts.filter((p) => p.id !== productId));
-      })
-      .catch((err) => {
-        alert('Error: ' + err.message);
+        products: updatedProducts,
       });
+
+      setCartProducts(cartProducts.filter((p) => p.id !== productId));
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
   };
 
   if (loading) {

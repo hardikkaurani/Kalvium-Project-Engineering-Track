@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getProductById, addToCart } from '../services/productService';
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -8,29 +9,9 @@ function ProductDetailPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // PROBLEM: Hardcoded URL, mixed async/await with .then, manual token handling
     const fetchProduct = async () => {
       try {
-        const token = localStorage.getItem('auth_token');
-        const headers = {};
-        if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
-          headers: headers,
-        });
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            localStorage.removeItem('auth_token');
-            window.location.href = '/login';
-            return;
-          }
-          throw new Error('Product not found');
-        }
-
-        const data = await response.json();
+        const { data } = await getProductById(id);
         setProduct(data);
       } catch (err) {
         setError(err.message);
@@ -42,32 +23,17 @@ function ProductDetailPage() {
     fetchProduct();
   }, [id]);
 
-  const handleAddToCart = () => {
-    // PROBLEM: Hardcoded URL, manual token, .then chain
-    const token = localStorage.getItem('auth_token');
-
-    fetch('https://fakestoreapi.com/carts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+  const handleAddToCart = async () => {
+    try {
+      await addToCart({
         userId: 1,
         date: new Date().toISOString(),
         products: [{ productId: product.id, quantity: 1 }],
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to add to cart');
-        return res.json();
-      })
-      .then((data) => {
-        alert('Added to cart!');
-      })
-      .catch((err) => {
-        alert('Error: ' + err.message);
       });
+      alert('Added to cart!');
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
   };
 
   if (loading) {
