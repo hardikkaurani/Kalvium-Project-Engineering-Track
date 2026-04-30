@@ -1,30 +1,49 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-// BUG 1: No localStorage persistence — auth is lost on refresh
-// BUG 2: login() does NOT save to localStorage
-// BUG 3: isAuthenticated is not provided in context
-// BUG 4: logout() does NOT clear localStorage
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
+  // FIX: Load auth state from localStorage on mount (persistence across refresh)
+  useEffect(() => {
+    const savedToken = localStorage.getItem('vault_token');
+    const savedUser = localStorage.getItem('vault_user');
+
+    if (savedToken && savedUser) {
+      try {
+        setToken(savedToken);
+        setUser(JSON.parse(savedUser));
+      } catch {
+        // Corrupted data — clear it
+        localStorage.removeItem('vault_token');
+        localStorage.removeItem('vault_user');
+      }
+    }
+  }, []);
+
+  // FIX: login saves to both state AND localStorage
   const login = (userData, authToken) => {
     setUser(userData);
     setToken(authToken);
-    // BUG: Missing localStorage.setItem calls
+    localStorage.setItem('vault_token', authToken);
+    localStorage.setItem('vault_user', JSON.stringify(userData));
   };
 
+  // FIX: logout clears both state AND localStorage
   const logout = () => {
     setUser(null);
     setToken(null);
-    // BUG: Missing localStorage.removeItem calls
+    localStorage.removeItem('vault_token');
+    localStorage.removeItem('vault_user');
   };
 
+  // FIX: Derive isAuthenticated from token
+  const isAuthenticated = !!token;
+
   return (
-    // BUG: isAuthenticated not exposed
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

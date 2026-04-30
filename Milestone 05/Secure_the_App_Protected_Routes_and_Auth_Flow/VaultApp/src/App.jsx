@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 
-// BUG: No ProtectedRoute wrapping — any user can access /dashboard, /settings, /profile
 function App() {
   return (
     <AuthProvider>
@@ -15,12 +15,22 @@ function App() {
         <div className="min-h-screen bg-gray-950 text-white">
           <Navbar />
           <Routes>
+            {/* Public route */}
             <Route path="/login" element={<Login />} />
-            {/* BUG: These should be protected but aren't */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Dashboard />} />
+
+            {/* Protected routes — wrapped with ProtectedRoute */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute><Dashboard /></ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute><Settings /></ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute><Profile /></ProtectedRoute>
+            } />
+            <Route path="/" element={
+              <ProtectedRoute><Dashboard /></ProtectedRoute>
+            } />
           </Routes>
         </div>
       </Router>
