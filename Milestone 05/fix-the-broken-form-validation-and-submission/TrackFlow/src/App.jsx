@@ -21,6 +21,32 @@ const EMPTY_FORM = {
   priority: '',
 };
 
+/**
+ * Validates form data and returns field-level errors.
+ * Returns an empty object if all fields are valid.
+ */
+function validate(data) {
+  const errors = {};
+
+  if (!data.title || !data.title.trim()) {
+    errors.title = 'Bug title is required';
+  }
+
+  if (!data.description || !data.description.trim()) {
+    errors.description = 'Description is required';
+  }
+
+  if (!data.stepsCount || Number(data.stepsCount) <= 0 || !Number.isInteger(Number(data.stepsCount))) {
+    errors.stepsCount = 'Steps count must be a positive whole number';
+  }
+
+  if (!data.priority) {
+    errors.priority = 'Priority is required';
+  }
+
+  return errors;
+}
+
 function App() {
   const [form, setForm] = useState({ ...EMPTY_FORM });
   const [errors, setErrors] = useState({});
@@ -28,30 +54,50 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
 
-  // BUG 1: Does not clear field-specific error on input change
+  // FIX 1: Clear field-specific error on input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Missing: should clear the error for this field
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+
+    // Clear success/server messages when user starts editing again
+    if (success) setSuccess('');
+    if (serverError) setServerError('');
   };
 
-  // BUG 2: No validation at all — empty form can be submitted
-  // BUG 3: No loading guard — double submit is possible
-  // BUG 4: Form does not reset after successful submission
-  // BUG 5: Server errors (from catch) are silently ignored
-  // BUG 6: stepsCount allows negative and zero values
+  // FIX 2-6: Complete validation, loading guard, form reset, error handling
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // No validation — empty submission passes right through
+    // FIX 2 + FIX 6: Validate all fields including stepsCount > 0
+    const validationErrors = validate(form);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // FIX 3: Prevent double-submit with loading guard
+    setLoading(true);
+    setServerError('');
+    setSuccess('');
 
     try {
       const result = await submitBugReport(form);
       setSuccess(`Bug #${result.id} submitted successfully!`);
-      // Form should reset here but doesn't
+
+      // FIX 4: Reset form after successful submission
+      setForm({ ...EMPTY_FORM });
+      setErrors({});
+      setServerError('');
     } catch (error) {
-      // Server errors are completely ignored here
-      console.log(error);
+      // FIX 5: Surface server errors to the UI
+      if (error.field) {
+        setErrors({ [error.field]: error.message });
+      } else {
+        setServerError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -93,7 +139,7 @@ function App() {
               onChange={handleChange}
               className={errors.title ? 'input-error' : ''}
             />
-            {/* BUG: No field-level error message displayed */}
+            {errors.title && <p className="field-error">{errors.title}</p>}
           </div>
 
           {/* Description Field */}
@@ -108,7 +154,7 @@ function App() {
               onChange={handleChange}
               className={errors.description ? 'input-error' : ''}
             />
-            {/* BUG: No field-level error message displayed */}
+            {errors.description && <p className="field-error">{errors.description}</p>}
           </div>
 
           {/* Steps Count Field */}
@@ -123,7 +169,7 @@ function App() {
               onChange={handleChange}
               className={errors.stepsCount ? 'input-error' : ''}
             />
-            {/* BUG: No field-level error message displayed */}
+            {errors.stepsCount && <p className="field-error">{errors.stepsCount}</p>}
           </div>
 
           {/* Priority Field */}
@@ -142,12 +188,12 @@ function App() {
               <option value="high">High</option>
               <option value="critical">Critical</option>
             </select>
-            {/* BUG: No field-level error message displayed */}
+            {errors.priority && <p className="field-error">{errors.priority}</p>}
           </div>
 
-          {/* Submit Button — BUG: not disabled during loading */}
-          <button type="submit" className="submit-btn">
-            Submit Bug Report
+          {/* Submit Button — disabled during loading to prevent double-submit */}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit Bug Report'}
           </button>
         </form>
       </main>
