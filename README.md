@@ -1,14 +1,10 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&width=600&lines=Kalvium+Engineering+Track+%F0%9F%9A%80;Build.+Learn.+Ship.+Repeat." alt="Typing SVG" />
+
 
 <br/>
 
-[![GitHub stars](https://img.shields.io/github/stars/hardikkaurani/Kalvium-Project-Engineering-Track?style=for-the-badge&color=6366f1&labelColor=1e1e2e)](https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/hardikkaurani/Kalvium-Project-Engineering-Track?style=for-the-badge&color=22d3ee&labelColor=1e1e2e)](https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/hardikkaurani/Kalvium-Project-Engineering-Track?style=for-the-badge&color=f43f5e&labelColor=1e1e2e)](https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track/issues)
-[![MIT License](https://img.shields.io/badge/License-MIT-a3e635?style=for-the-badge&labelColor=1e1e2e)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-orange?style=for-the-badge&labelColor=1e1e2e)](CONTRIBUTING.md)
+
 
 <br/>
 
@@ -16,7 +12,7 @@
 
 <br/>
 
-[🚀 Get Started](#-quick-start) · [📖 Docs](#-api-documentation) · [🤝 Contribute](#-contributing) · [🐛 Report Bug](https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track/issues)
+[ Get Started](#-quick-start) · [ Docs](#-api-documentation) · [ Contribute](#-contributing) · [ Report Bug](https://github.com/hardikkaurani/Kalvium-Project-Engineering-Track/issues)
 
 </div>
 
@@ -24,35 +20,35 @@
 
 ## 📑 Table of Contents
 
-- [✨ About the Project](#-about-the-project)
-- [⚙️ Tech Stack](#️-tech-stack)
-- [🏗️ Architecture](#️-architecture)
-- [🗂️ Project Structure](#️-project-structure)
-- [🚀 Quick Start](#-quick-start)
-- [🔐 Environment Variables](#-environment-variables)
-- [📖 API Documentation](#-api-documentation)
-- [🧪 Testing](#-testing)
-- [🐳 Docker Setup](#-docker-setup)
-- [🗺️ Roadmap](#️-roadmap)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [ About the Project](#-about-the-project)
+- [ Tech Stack](#️-tech-stack)
+- [ Architecture](#️-architecture)
+- [ Project Structure](#️-project-structure)
+- [ Quick Start](#-quick-start)
+- [ Environment Variables](#-environment-variables)
+- [ API Documentation](#-api-documentation)
+- [ Testing](#-testing)
+- [ Docker Setup](#-docker-setup)
+- [ Roadmap](#️-roadmap)
+- [ Contributing](#-contributing)
+- [ License](#-license)
 
 ---
 
-## ✨ About the Project
+##  About the Project
 
 The **Kalvium Project Engineering Track** is a structured, industry-aligned learning framework that puts you in the driver's seat of a real-world full-stack application. Instead of toy tutorials, you work on:
 
-- 🔨 **Production-grade codebases** with clean architecture patterns
-- 🧠 **Real engineering decisions** — database design, API contracts, service boundaries
-- 🤝 **Collaborative workflows** — PRs, code reviews, branching strategies
-- 🚢 **End-to-end delivery** — from local dev to containerized cloud deployment
+-  **Production-grade codebases** with clean architecture patterns
+-  **Real engineering decisions** — database design, API contracts, service boundaries
+-  **Collaborative workflows** — PRs, code reviews, branching strategies
+-  **End-to-end delivery** — from local dev to containerized cloud deployment
 
 Whether you're just starting your engineering journey or leveling up from fundamentals, this track is built to bridge the gap between _learning_ and _doing_.
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 <div align="center">
 
@@ -68,7 +64,7 @@ Whether you're just starting your engineering journey or leveling up from fundam
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 The system follows a **layered microservices architecture** with clear separation of concerns. Each layer has a single responsibility and communicates through well-defined interfaces.
 
@@ -231,7 +227,7 @@ kalvium-engineering-track/
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -289,7 +285,7 @@ Backend  → http://localhost:5000
 
 ---
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in the root. Refer to `.env.example` for all required keys:
 
@@ -310,7 +306,7 @@ Create a `.env` file in the root. Refer to `.env.example` for all required keys:
 
 ---
 
-## 📖 API Documentation
+##  API Documentation
 
 Base URL: `http://localhost:5000/api`
 
@@ -364,7 +360,7 @@ POST /api/auth/signup
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 The project uses **Jest** for unit tests and **Mocha** for integration tests.
 
@@ -386,7 +382,7 @@ Coverage thresholds are enforced in `jest.config.js`. Aim for **>80% coverage** 
 
 ---
 
-## 🐳 Docker Setup
+##  Docker Setup
 
 The app is fully containerized. Each service has its own `Dockerfile` and they're orchestrated via `docker-compose.yml`.
 
@@ -418,7 +414,7 @@ docker-compose up --build server
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 ```mermaid
 gantt
@@ -440,7 +436,7 @@ gantt
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are what make open source amazing. Here's how to get involved:
 
@@ -479,7 +475,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ---
 
-## 📄 License
+##  License
 
 Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
 
@@ -487,7 +483,7 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more informa
 
 <div align="center">
 
-Made with ❤️ by [Hardik Kaurani](https://github.com/hardikkaurani) & the Kalvium community
+Made by [Hardik Kaurani](https://github.com/hardikkaurani) & the Kalvium community
 
 ⭐ If this project helped you, please give it a star!
 
