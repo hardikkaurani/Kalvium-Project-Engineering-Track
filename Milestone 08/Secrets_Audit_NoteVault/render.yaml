@@ -1,0 +1,20 @@
+# render.yaml — Render Blueprint for NoteVault
+# Secured with environment variable requirements and auto-generated secrets.
+
+services:
+  - type: web
+    name: notevault-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # FIX: DATABASE_URL is required from the user or another service
+      - key: DATABASE_URL
+        sync: false
+      # FIX: JWT_SECRET is auto-generated for maximum security during deployment
+      - key: JWT_SECRET
+        generateValue: true
