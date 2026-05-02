@@ -1,0 +1,22 @@
+config:
+  target: "http://localhost:3001"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 50
+      name: Warm up phase
+    - duration: 120
+      arrivalRate: 50
+      name: Sustained load phase
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: "Fetch Paginated Missions"
+    flow:
+      - get:
+          url: "/api/missions?page=1&limit=12"
+      - think: 2
+      - get:
+          url: "/api/missions?page=2&limit=12"
