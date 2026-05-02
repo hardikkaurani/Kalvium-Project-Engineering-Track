@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -16,32 +16,40 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend from Vite's build folder
 app.use(express.static(path.join(__dirname, '../dist')));
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-/**
- * SECURE PROXY ROUTE
- * This route receives notes from the frontend and forwards them to OpenAI via aiService.
- * The frontend never interacts with OpenAI directly.
- */
 app.post('/api/summarize', async (req, res) => {
   try {
     const { notes } = req.body;
 
-    if (!notes) {
-      return res.status(400).json({ success: false, error: 'Notes are required' });
+    if (!notes || notes.trim().length === 0) {
+      return res.status(400).json({
+        error: 'input_required',
+        message: 'Notes text is required.'
+      });
     }
 
-    const summary = await summarizeNotes(notes);
+    if (notes.length > 3000) {
+      return res.status(400).json({
+        error: 'input_too_long',
+        limit: 3000,
+        received: notes.length
+      });
+    }
+
+    const result = await summarizeNotes(notes);
+    
+    if (result && result.fallback) {
+      return res.status(503).json(result);
+    }
     
     res.json({
       success: true,
-      data: { summary }
+      data: { summary: result }
     });
   } catch (err) {
     console.error('Summarization error:', err.message);
@@ -53,5 +61,5 @@ app.post('/api/summarize', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`?? Backend server running on http://localhost:${PORT}`);
+  console.log(🚀 Backend server running on http://localhost: + PORT);
 });
